@@ -246,7 +246,7 @@ namespace ProjectPemrog_MN.Controllers
                         return true;
                     }
                     catch (Exception ex)
-                    {
+                    { 
                         trx.Rollback();
                         MessageBox.Show("Error registrasi: " + ex.Message);
                         return false;
