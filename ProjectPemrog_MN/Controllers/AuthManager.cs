@@ -1,10 +1,14 @@
 ﻿using MySql.Data.MySqlClient;
 using ProjectPemrog_MN.Config;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace ProjectPemrog_MN.Controllers
 {
@@ -18,95 +22,239 @@ namespace ProjectPemrog_MN.Controllers
             using (SHA256 sha = SHA256.Create())
             {
                 byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(bytes);
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in bytes)
+                    sb.Append(b.ToString("x2"));
+                return sb.ToString();
             }
         }
 
-        // ================= CEK LOGIN =================
+
+        // ================= LOGIN =================
         public DataTable CekLogin(string username, string password)
         {
             DataTable dt = new DataTable();
+            string hash = HashPassword(password);
 
-            try
+            string query = @"SELECT * FROM users
+                     WHERE username=@u AND password=@p";
+
+            using (var conn = db.GetConnection())
+            using (var cmd = new MySqlCommand(query, conn))
             {
-                string query = @"SELECT id_user, username, role, id_karyawan
-                                 FROM users
-                                 WHERE username = @u AND password = @p";
-
-                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
                 cmd.Parameters.AddWithValue("@u", username);
-                cmd.Parameters.AddWithValue("@p", HashPassword(password));
-
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                da.Fill(dt);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Login gagal: " + ex.Message);
+                cmd.Parameters.AddWithValue("@p", hash);
+                new MySqlDataAdapter(cmd).Fill(dt);
             }
 
             return dt;
         }
 
-        // ================= REGISTRASI LENGKAP =================
-        public bool RegistrasiKaryawan(string namaLengkap, string username, string password)
+
+
+        // ================= REGISTRASI =================
+        public bool RegistrasiKaryawan(string nama, string username, string password)
         {
+            string idKaryawan = BuatIDKaryawanOtomatis();
+            string hash = HashPassword(password);
+
             MySqlTransaction tr = null;
 
             try
             {
-                MySqlConnection conn = db.GetConnection();
+                var conn = db.GetConnection();
                 tr = conn.BeginTransaction();
 
-                // 1. Generate ID Karyawan
-                string idKaryawan = BuatIDKaryawanOtomatis(conn, tr);
+                string q1 = @"INSERT INTO karyawan 
+                             (id_karyawan, nama_lengkap, id_jabatan)
+                             VALUES (@id, @nama, 2)";
 
-                // 2. Insert Karyawan
-                string qKaryawan = @"INSERT INTO karyawan 
-                                    (id_karyawan, nama_lengkap, id_jabatan)
-                                    VALUES (@id, @nama, 2)";
-                MySqlCommand cmdKry = new MySqlCommand(qKaryawan, conn, tr);
-                cmdKry.Parameters.AddWithValue("@id", idKaryawan);
-                cmdKry.Parameters.AddWithValue("@nama", namaLengkap);
-                cmdKry.ExecuteNonQuery();
+                MySqlCommand c1 = new MySqlCommand(q1, conn, tr);
+                c1.Parameters.AddWithValue("@id", idKaryawan);
+                c1.Parameters.AddWithValue("@nama", nama);
+                c1.ExecuteNonQuery();
 
-                // 3. Insert User
-                string qUser = @"INSERT INTO users 
-                                (username, password, role, id_karyawan)
-                                VALUES (@u, @p, 'Karyawan', @id)";
-                MySqlCommand cmdUser = new MySqlCommand(qUser, conn, tr);
-                cmdUser.Parameters.AddWithValue("@u", username);
-                cmdUser.Parameters.AddWithValue("@p", HashPassword(password));
-                cmdUser.Parameters.AddWithValue("@id", idKaryawan);
-                cmdUser.ExecuteNonQuery();
+                string q2 = @"INSERT INTO users 
+                             (username, password, role, id_karyawan)
+                             VALUES (@u, @p, 'Karyawan', @id)";
+
+                MySqlCommand c2 = new MySqlCommand(q2, conn, tr);
+                c2.Parameters.AddWithValue("@u", username);
+                c2.Parameters.AddWithValue("@p", hash);
+                c2.Parameters.AddWithValue("@id", idKaryawan);
+                c2.ExecuteNonQuery();
 
                 tr.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                if (tr != null) tr.Rollback();
-                MessageBox.Show("Registrasi gagal: " + ex.Message);
+                tr?.Rollback();
                 return false;
             }
         }
 
-        // ================= ID KARYAWAN OTOMATIS =================
-        private string BuatIDKaryawanOtomatis(MySqlConnection conn, MySqlTransaction tr)
+        // ================= ID OTOMATIS =================
+        private string BuatIDKaryawanOtomatis()
         {
-            string idBaru = "KRY001";
+            string id = "KRY001";
 
-            string query = "SELECT id_karyawan FROM karyawan ORDER BY id_karyawan DESC LIMIT 1";
-            MySqlCommand cmd = new MySqlCommand(query, conn, tr);
-            object result = cmd.ExecuteScalar();
+            string q = "SELECT id_karyawan FROM karyawan ORDER BY id_karyawan DESC LIMIT 1";
+            MySqlCommand cmd = new MySqlCommand(q, db.GetConnection());
+            object r = cmd.ExecuteScalar();
 
-            if (result != null)
+            if (r != null)
             {
-                int angka = int.Parse(result.ToString().Substring(3));
-                idBaru = "KRY" + (angka + 1).ToString("D3");
+                int n = int.Parse(r.ToString().Substring(3)) + 1;
+                id = "KRY" + n.ToString("D3");
             }
 
-            return idBaru;
+            return id;
         }
+
+        public DataTable GetProfilKaryawan(string username)
+        {
+            DataTable dt = new DataTable();
+
+            string query = @"
+        SELECT k.nama_lengkap, j.nama_jabatan, j.gaji_pokok
+        FROM users u
+        JOIN karyawan k ON u.id_karyawan = k.id_karyawan
+        JOIN jabatan j ON k.id_jabatan = j.id_jabatan
+        WHERE u.username = @username
+    ";
+
+            using (var conn = db.GetConnection())
+            using (var cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@username", username);
+                new MySqlDataAdapter(cmd).Fill(dt);
+            }
+
+            return dt;
+        }
+
+        public bool SimpanRegistrasiLengkap(string nama, string username, string password)
+        {
+            string hash = HashPassword(password);
+
+            using (var conn = db.GetConnection())
+            {
+                conn.Open();
+
+                using (var trx = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1️⃣ Insert ke tabel karyawan
+                        string q1 = @"
+                    INSERT INTO karyawan (id_karyawan, nama_lengkap)
+                    VALUES (UUID(), @nama);
+                ";
+
+                        MySqlCommand cmd1 = new MySqlCommand(q1, conn, trx);
+                        cmd1.Parameters.AddWithValue("@nama", nama);
+                        cmd1.ExecuteNonQuery();
+
+                        // 2️⃣ Ambil id_karyawan terakhir
+                        string qGet = @"
+                    SELECT id_karyawan 
+                    FROM karyawan 
+                    ORDER BY id_karyawan DESC 
+                    LIMIT 1;
+                ";
+
+                        MySqlCommand cmdGet = new MySqlCommand(qGet, conn, trx);
+                        string idKaryawan = cmdGet.ExecuteScalar().ToString();
+
+                        // 3️⃣ Insert ke users
+                        string q2 = @"
+                    INSERT INTO users (username, password, role, id_karyawan)
+                    VALUES (@username, @password, 'Karyawan', @id_karyawan);
+                ";
+
+                        MySqlCommand cmd2 = new MySqlCommand(q2, conn, trx);
+                        cmd2.Parameters.AddWithValue("@username", username);
+                        cmd2.Parameters.AddWithValue("@password", hash);
+                        cmd2.Parameters.AddWithValue("@id_karyawan", idKaryawan);
+                        cmd2.ExecuteNonQuery();
+
+                        trx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        trx.Rollback();
+                        MessageBox.Show("Error registrasi: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public bool RegisterDanLogin(
+            string nama,
+            string username,
+            string password,
+            out string role,
+            out string idKaryawan)
+        {
+            role = "Karyawan";
+            idKaryawan = null;
+
+            using (var conn = db.GetConnection())
+            {
+                conn.Open();
+                using (var trx = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1️⃣ Insert Karyawan
+                        string q1 = @"
+                    INSERT INTO karyawan (id_karyawan, nama_lengkap, id_jabatan)
+                    VALUES (
+                        CONCAT('KRY', LPAD(
+                            (SELECT IFNULL(MAX(SUBSTRING(id_karyawan,4)),0)+1 FROM karyawan k),
+                        3,'0')),
+                        @nama,
+                        1
+                    )";
+
+                        MySqlCommand cmd1 = new MySqlCommand(q1, conn, trx);
+                        cmd1.Parameters.AddWithValue("@nama", nama);
+                        cmd1.ExecuteNonQuery();
+
+                        // 2️⃣ Ambil id_karyawan terakhir
+                        string qId = "SELECT id_karyawan FROM karyawan ORDER BY id_karyawan DESC LIMIT 1";
+                        MySqlCommand cmdId = new MySqlCommand(qId, conn, trx);
+                        idKaryawan = cmdId.ExecuteScalar().ToString();
+
+                        // 3️⃣ Insert Users
+                        string hash = HashPassword(password);
+
+                        string q2 = @"
+                    INSERT INTO users (username, password, role, id_karyawan)
+                    VALUES (@username, @password, 'Karyawan', @id_karyawan)";
+
+                        MySqlCommand cmd2 = new MySqlCommand(q2, conn, trx);
+                        cmd2.Parameters.AddWithValue("@username", username);
+                        cmd2.Parameters.AddWithValue("@password", hash);
+                        cmd2.Parameters.AddWithValue("@id_karyawan", idKaryawan);
+                        cmd2.ExecuteNonQuery();
+
+                        trx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        trx.Rollback();
+                        MessageBox.Show("Error registrasi: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+        }
+
+
     }
 }

@@ -21,28 +21,42 @@ namespace ProjectPemrog_MN.Views
 
         private void btnDaftar_Click(object sender, EventArgs e)
         {
-            // Validasi input tidak boleh kosong
-            if (txtNamaLengkap.Text == "" || txtUsername.Text == "" || txtPassword.Text == "")
-            {
-                MessageBox.Show("Mohon lengkapi semua data!");
-                return;
-            }
+            string role;
+            string idKaryawan;
 
-            // Panggil fungsi simpan yang melakukan double insert
-            bool sukses = auth.SimpanRegistrasiLengkap(txtNamaLengkap.Text, txtUsername.Text, txtPassword.Text);
+            bool sukses = auth.RegisterDanLogin(
+                txtNamaLengkap.Text,
+                txtUsername.Text,
+                txtPassword.Text,
+                out role,
+                out idKaryawan
+            );
 
             if (sukses)
             {
-                MessageBox.Show("Akun berhasil dibuat! Silahkan login.");
-                new FormLogin().Show();
-                this.Close();
+                MessageBox.Show("Registrasi berhasil. Selamat datang!");
+
+                if (role == "Admin")
+                {
+                    FormParent parent = new FormParent(
+                        txtUsername.Text,
+                        role,
+                        idKaryawan
+                    );
+                    parent.Show();
+                }
+                else if (role == "Karyawan")
+                {
+                    FormProfilKaryawan profil = new FormProfilKaryawan(txtUsername.Text);
+                    profil.Show();
+                }
+
+                this.Hide();
             }
-            else
-            {
-                MessageBox.Show("Registrasi Gagal! Username mungkin sudah digunakan.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
+
+
 
         private void btnKembali_Click(object sender, EventArgs e)
         {

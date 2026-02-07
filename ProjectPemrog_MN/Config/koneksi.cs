@@ -16,23 +16,19 @@ namespace ProjectPemrog_MN.Config
 
         public Koneksi()
         {
-            // Ambil dari App.config
-            connString = ConfigurationManager.ConnectionStrings["db_pemrog2"].ConnectionString;
+            var cs = ConfigurationManager.ConnectionStrings["pemrog2"];
+
+            if (cs == null)
+                throw new Exception(
+                    "Connection string 'pemrog2' tidak ditemukan di App.config");
+
+            connString = cs.ConnectionString;
         }
 
         public MySqlConnection GetConnection()
         {
-            MySqlConnection conn = new MySqlConnection(connString);
-            try
-            {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Gagal koneksi ke database: " + ex.Message);
-            }
-            return conn;
+            return new MySqlConnection(connString);
         }
+
     }
 }

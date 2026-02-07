@@ -84,7 +84,7 @@
             // prosesGajiToolStripMenuItem
             // 
             this.prosesGajiToolStripMenuItem.Name = "prosesGajiToolStripMenuItem";
-            this.prosesGajiToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.prosesGajiToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.prosesGajiToolStripMenuItem.Text = "Proses Gaji";
             // 
             // profilToolStripMenuItem
@@ -92,7 +92,7 @@
             this.profilToolStripMenuItem.Checked = true;
             this.profilToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.profilToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             // 
             // laporanToolStripMenuItem
             // 
@@ -105,7 +105,7 @@
             // cetakDataToolStripMenuItem
             // 
             this.cetakDataToolStripMenuItem.Name = "cetakDataToolStripMenuItem";
-            this.cetakDataToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.cetakDataToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.cetakDataToolStripMenuItem.Text = "Cetak Data";
             // 
             // akunToolStripMenuItem
@@ -115,6 +115,7 @@
             this.akunToolStripMenuItem.Name = "akunToolStripMenuItem";
             this.akunToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
             this.akunToolStripMenuItem.Text = "Akun";
+            this.akunToolStripMenuItem.Click += new System.EventHandler(this.akunToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 

@@ -13,46 +13,56 @@ namespace ProjectPemrog_MN.Views
 {
     public partial class FormLogin : Form
     {
-        AuthManager auth = new AuthManager();
+        private AuthManager auth = new AuthManager();
+
         public FormLogin()
         {
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e) 
         {
-            string user = txtUsername.Text;
-            string pass = txtPassword.Text;
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text;
 
-            DataTable result = auth.CekLogin(user, pass);
+            // ===== VALIDASI INPUT =====
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Username dan Password wajib diisi!",
+                                "Peringatan",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+
+            // ===== CEK LOGIN =====
+            DataTable result = auth.CekLogin(username, password);
 
             if (result.Rows.Count > 0)
             {
                 string role = result.Rows[0]["role"].ToString();
-                string usernameFromDb = result.Rows[0]["username"].ToString();
+                string usernameDb = result.Rows[0]["username"].ToString();
+                string idKaryawan = result.Rows[0]["id_karyawan"] == DBNull.Value
+                    ? null
+                    : result.Rows[0]["id_karyawan"].ToString();
 
-                MessageBox.Show("Login Berhasil! Anda masuk sebagai " + role);
+                FormParent parent = new FormParent(
+                    usernameDb,
+                    role,
+                    idKaryawan
+                );
 
-                // LOGIKA PEMISAHAN FORM BERDASARKAN ROLE
-                if (role == "Admin")
-                {
-                    // Jika Admin, buka menu utama (Parent)
-                    FormParent parent = new FormParent(role, usernameFromDb);
-                    parent.Show();
-                }
-                else if (role == "Karyawan")
-                {
-                    // Jika Karyawan, langsung buka Form Profil
-                    // Pastikan FormProfilKaryawan Anda sudah bisa menerima parameter username
-                    FormProfilKaryawan profil = new FormProfilKaryawan(usernameFromDb);
-                    profil.Show();
-                }
-
+                parent.Show();
                 this.Hide();
             }
             else
             {
-                MessageBox.Show("Username atau Password Salah!");
+                MessageBox.Show(
+                    "Username atau Password salah!",
+                    "Login Gagal",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
@@ -60,7 +70,6 @@ namespace ProjectPemrog_MN.Views
         {
             FormRegistrasi reg = new FormRegistrasi();
             reg.Show();
-
             this.Hide();
         }
     }
