@@ -93,6 +93,7 @@
             this.dgvKaryawan.RowTemplate.Height = 28;
             this.dgvKaryawan.Size = new System.Drawing.Size(1000, 530);
             this.dgvKaryawan.TabIndex = 1;
+            this.dgvKaryawan.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKaryawan_CellClick);
             // 
             // FormDaftarKaryawan
             // 

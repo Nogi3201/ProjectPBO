@@ -22,7 +22,6 @@ namespace ProjectPemrog_MN.Views
             // Tidak perlu isi apa-apa
         }
 
-
         public FormParent(string username, string role, string idKaryawan)
         {
             InitializeComponent();
@@ -40,15 +39,14 @@ namespace ProjectPemrog_MN.Views
                 masterToolStripMenuItem.Visible = false;
                 laporanToolStripMenuItem.Visible = false;
             }
-
         }
 
-        // ================= PROFIL =================
-        private void profileToolStripMenuItem_Click(object sender, EventArgs e)
+        // ================= PROFIL KARYAWAN =================
+        private void profilAkunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Application.OpenForms["FormProfilKaryawan"] == null)
             {
-                FormProfilKaryawan profil = new FormProfilKaryawan(this.username);
+                FormProfilKaryawan profil = new FormProfilKaryawan(this.username, this.idKaryawan);
                 profil.MdiParent = this;
                 profil.WindowState = FormWindowState.Maximized;
                 profil.Show();
@@ -59,7 +57,6 @@ namespace ProjectPemrog_MN.Views
             }
         }
 
-
         // ================= DATA KARYAWAN =================
         private void dataKaryawanToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -68,7 +65,7 @@ namespace ProjectPemrog_MN.Views
                 FormDaftarKaryawan fk = new FormDaftarKaryawan();
                 fk.MdiParent = this;
                 fk.WindowState = FormWindowState.Maximized;
-                fk.Show();
+                   fk.Show();
             }
             else
             {
@@ -95,7 +92,55 @@ namespace ProjectPemrog_MN.Views
 
         private void akunToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Placeholder untuk event handler yang belum digunakan
+        }
 
+        private void masterToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void prosesGajiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Open child forms inside this MDI parent
+            Form form = new FormProsesGaji();
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private void profilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // FormProfilKaryawan requires username and idKaryawan
+            Form form = new FormProfilKaryawan(this.username, this.idKaryawan);
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+
+        private void jabatanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = new FormDataJabatan();
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private void cetakDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = new FormCetakData();
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private void laporanGajiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = new FormLaporanGaji();
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
         }
     }
 }

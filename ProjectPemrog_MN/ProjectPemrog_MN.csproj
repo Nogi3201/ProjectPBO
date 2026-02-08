@@ -141,11 +141,44 @@
     <Compile Include="Config\koneksi.cs" />
     <Compile Include="Controllers\AuthManager.cs" />
     <Compile Include="Controllers\KaryawanController.cs" />
+    <Compile Include="Views\FormCetakData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormCetakData.Designer.cs">
+      <DependentUpon>FormCetakData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormCicilanGaji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormCicilanGaji.Designer.cs">
+      <DependentUpon>FormCicilanGaji.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FormDaftarKaryawan.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\FormDaftarKaryawan.Designer.cs">
       <DependentUpon>FormDaftarKaryawan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormDataJabatan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormDataJabatan.Designer.cs">
+      <DependentUpon>FormDataJabatan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormEditProfilKaryawan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormEditProfilKaryawan.Designer.cs">
+      <DependentUpon>FormEditProfilKaryawan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormInputLembur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormLaporanGaji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormLaporanGaji.Designer.cs">
+      <DependentUpon>FormLaporanGaji.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormParent.cs">
       <SubType>Form</SubType>
@@ -166,6 +199,12 @@
     </Compile>
     <Compile Include="Views\FormProfilKaryawan.Designer.cs">
       <DependentUpon>FormProfilKaryawan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormProsesGaji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormProsesGaji.Designer.cs">
+      <DependentUpon>FormProsesGaji.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormRegistrasi.cs">
       <SubType>Form</SubType>
@@ -189,6 +228,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\FormCetakData.resx">
+      <DependentUpon>FormCetakData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormCicilanGaji.resx">
+      <DependentUpon>FormCicilanGaji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormDataJabatan.resx">
+      <DependentUpon>FormDataJabatan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormEditProfilKaryawan.resx">
+      <DependentUpon>FormEditProfilKaryawan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormProfilKaryawan.resx">
       <DependentUpon>FormProfilKaryawan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormProsesGaji.resx">
+      <DependentUpon>FormProsesGaji.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormRegistrasi.resx">
       <DependentUpon>FormRegistrasi.cs</DependentUpon>

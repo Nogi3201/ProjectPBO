@@ -28,7 +28,6 @@ namespace ProjectPemrog_MN.Views
         }
 
         // ================= EXPORT EXCEL =================
-
         private void ExportToExcel()
         {
             if (dgvKaryawan.Rows.Count == 0)
@@ -50,7 +49,7 @@ namespace ProjectPemrog_MN.Views
                         var ws = wb.Worksheets.Add("Karyawan");
 
                         // Header
-                        for (int i = 0; i < dgvKaryawan.Columns.Count; i++)
+                        for (int i = 0; i < dgvKaryawan.Columns.Count - 1; i++) // Exclude kolom Aksi
                         {
                             ws.Cell(1, i + 1).Value = dgvKaryawan.Columns[i].HeaderText;
                             ws.Cell(1, i + 1).Style.Font.Bold = true;
@@ -59,7 +58,7 @@ namespace ProjectPemrog_MN.Views
                         // Data
                         for (int r = 0; r < dgvKaryawan.Rows.Count; r++)
                         {
-                            for (int c = 0; c < dgvKaryawan.Columns.Count; c++)
+                            for (int c = 0; c < dgvKaryawan.Columns.Count - 1; c++) // Exclude kolom Aksi
                             {
                                 ws.Cell(r + 2, c + 1).Value =
                                     dgvKaryawan.Rows[r].Cells[c].Value?.ToString();
@@ -79,11 +78,11 @@ namespace ProjectPemrog_MN.Views
         {
             ExportToExcel();
         }
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadData();
         }
-
 
         private void LoadData()
         {
@@ -106,6 +105,17 @@ namespace ProjectPemrog_MN.Views
 
                     dgvKaryawan.Columns[3].DefaultCellStyle.Format = "N0";
                 }
+
+                // Tambahkan kolom aksi jika belum ada
+                if (!dgvKaryawan.Columns.Contains("Aksi"))
+                {
+                    DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
+                    btnEdit.Name = "Aksi";
+                    btnEdit.HeaderText = "Aksi";
+                    btnEdit.Text = "Edit";
+                    btnEdit.UseColumnTextForButtonValue = true;
+                    dgvKaryawan.Columns.Add(btnEdit);
+                }
             }
             catch (Exception ex)
             {
@@ -118,5 +128,15 @@ namespace ProjectPemrog_MN.Views
             }
         }
 
+        private void dgvKaryawan_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvKaryawan.Columns["Aksi"].Index && e.RowIndex >= 0)
+            {
+                string idKaryawan = dgvKaryawan.Rows[e.RowIndex].Cells[0].Value.ToString();
+                FormEditProfilKaryawan editForm = new FormEditProfilKaryawan(idKaryawan);
+                editForm.ShowDialog();
+                LoadData();
+            }
+        }
     }
 }

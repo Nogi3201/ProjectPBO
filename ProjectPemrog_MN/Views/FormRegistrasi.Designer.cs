@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,137 +28,199 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlRegisterContainer = new System.Windows.Forms.Panel();
+            this.btnLogin = new System.Windows.Forms.Button();
             this.btnDaftar = new System.Windows.Forms.Button();
-            this.btnKembali = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.lblUsername = new System.Windows.Forms.Label();
             this.txtNamaLengkap = new System.Windows.Forms.TextBox();
+            this.lblNamaLengkap = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.pnlMain.SuspendLayout();
+            this.pnlRegisterContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtUsername
+            // pnlMain
             // 
-            this.txtUsername.Location = new System.Drawing.Point(80, 237);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(231, 20);
-            this.txtUsername.TabIndex = 0;
+            this.pnlMain.BackColor = System.Drawing.Color.White;
+            this.pnlMain.Controls.Add(this.pnlRegisterContainer);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(500, 650);
+            this.pnlMain.TabIndex = 0;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
-            // txtPassword
+            // pnlRegisterContainer
             // 
-            this.txtPassword.Location = new System.Drawing.Point(80, 308);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(231, 20);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.pnlRegisterContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlRegisterContainer.BackColor = System.Drawing.Color.White;
+            this.pnlRegisterContainer.Controls.Add(this.btnLogin);
+            this.pnlRegisterContainer.Controls.Add(this.btnDaftar);
+            this.pnlRegisterContainer.Controls.Add(this.txtPassword);
+            this.pnlRegisterContainer.Controls.Add(this.lblPassword);
+            this.pnlRegisterContainer.Controls.Add(this.txtUsername);
+            this.pnlRegisterContainer.Controls.Add(this.lblUsername);
+            this.pnlRegisterContainer.Controls.Add(this.txtNamaLengkap);
+            this.pnlRegisterContainer.Controls.Add(this.lblNamaLengkap);
+            this.pnlRegisterContainer.Controls.Add(this.lblTitle);
+            this.pnlRegisterContainer.Location = new System.Drawing.Point(30, 50);
+            this.pnlRegisterContainer.Name = "pnlRegisterContainer";
+            this.pnlRegisterContainer.Size = new System.Drawing.Size(440, 550);
+            this.pnlRegisterContainer.TabIndex = 0;
+            this.pnlRegisterContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlRegisterContainer_Paint);
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.BackColor = System.Drawing.Color.White;
+            this.btnLogin.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.btnLogin.FlatAppearance.BorderSize = 2;
+            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.btnLogin.Location = new System.Drawing.Point(128, 445);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(200, 38);
+            this.btnLogin.TabIndex = 9;
+            this.btnLogin.Text = "Sudah Punya Akun? Login";
+            this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.btnLogin.MouseEnter += new System.EventHandler(this.btnLogin_MouseEnter);
+            this.btnLogin.MouseLeave += new System.EventHandler(this.btnLogin_MouseLeave);
             // 
             // btnDaftar
             // 
-            this.btnDaftar.BackColor = System.Drawing.Color.Lime;
+            this.btnDaftar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.btnDaftar.FlatAppearance.BorderSize = 0;
             this.btnDaftar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDaftar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDaftar.ForeColor = System.Drawing.Color.White;
-            this.btnDaftar.Location = new System.Drawing.Point(236, 355);
+            this.btnDaftar.Location = new System.Drawing.Point(128, 389);
             this.btnDaftar.Name = "btnDaftar";
-            this.btnDaftar.Size = new System.Drawing.Size(75, 23);
-            this.btnDaftar.TabIndex = 2;
+            this.btnDaftar.Size = new System.Drawing.Size(200, 38);
+            this.btnDaftar.TabIndex = 8;
             this.btnDaftar.Text = "Daftar";
             this.btnDaftar.UseVisualStyleBackColor = false;
             this.btnDaftar.Click += new System.EventHandler(this.btnDaftar_Click);
+            this.btnDaftar.MouseEnter += new System.EventHandler(this.btnDaftar_MouseEnter);
+            this.btnDaftar.MouseLeave += new System.EventHandler(this.btnDaftar_MouseLeave);
             // 
-            // btnKembali
+            // txtPassword
             // 
-            this.btnKembali.BackColor = System.Drawing.Color.Red;
-            this.btnKembali.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKembali.ForeColor = System.Drawing.Color.White;
-            this.btnKembali.Location = new System.Drawing.Point(80, 355);
-            this.btnKembali.Name = "btnKembali";
-            this.btnKembali.Size = new System.Drawing.Size(75, 23);
-            this.btnKembali.TabIndex = 3;
-            this.btnKembali.Text = "Kembali";
-            this.btnKembali.UseVisualStyleBackColor = false;
-            this.btnKembali.Click += new System.EventHandler(this.btnKembali_Click);
+            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtPassword.Location = new System.Drawing.Point(128, 296);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(5);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(200, 18);
+            this.txtPassword.TabIndex = 7;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
-            // label1
+            // lblPassword
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(75, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(236, 25);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "DAFTAR AKUN KARYAWAN";
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblPassword.Location = new System.Drawing.Point(128, 272);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(73, 19);
+            this.lblPassword.TabIndex = 6;
+            this.lblPassword.Text = "Password";
             // 
-            // label2
+            // txtUsername
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(77, 217);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Username";
+            this.txtUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtUsername.Location = new System.Drawing.Point(128, 222);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(5);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(200, 18);
+            this.txtUsername.TabIndex = 5;
             // 
-            // label3
+            // lblUsername
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.label3.Location = new System.Drawing.Point(77, 288);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 17);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Password";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.label4.Location = new System.Drawing.Point(77, 152);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 17);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Nama Lengkap";
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblUsername.Location = new System.Drawing.Point(128, 198);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(76, 19);
+            this.lblUsername.TabIndex = 4;
+            this.lblUsername.Text = "Username";
             // 
             // txtNamaLengkap
             // 
-            this.txtNamaLengkap.Location = new System.Drawing.Point(80, 172);
+            this.txtNamaLengkap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.txtNamaLengkap.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtNamaLengkap.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNamaLengkap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtNamaLengkap.Location = new System.Drawing.Point(128, 152);
+            this.txtNamaLengkap.Margin = new System.Windows.Forms.Padding(5);
             this.txtNamaLengkap.Name = "txtNamaLengkap";
-            this.txtNamaLengkap.Size = new System.Drawing.Size(231, 20);
-            this.txtNamaLengkap.TabIndex = 8;
+            this.txtNamaLengkap.Size = new System.Drawing.Size(200, 18);
+            this.txtNamaLengkap.TabIndex = 3;
+            // 
+            // lblNamaLengkap
+            // 
+            this.lblNamaLengkap.AutoSize = true;
+            this.lblNamaLengkap.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNamaLengkap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblNamaLengkap.Location = new System.Drawing.Point(128, 128);
+            this.lblNamaLengkap.Name = "lblNamaLengkap";
+            this.lblNamaLengkap.Size = new System.Drawing.Size(110, 19);
+            this.lblNamaLengkap.TabIndex = 2;
+            this.lblNamaLengkap.Text = "Nama Lengkap";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.lblTitle.Location = new System.Drawing.Point(67, 18);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(326, 32);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "DAFTAR AKUN KARYAWAN";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // FormRegistrasi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 461);
-            this.Controls.Add(this.txtNamaLengkap);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnKembali);
-            this.Controls.Add(this.btnDaftar);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUsername);
+            this.ClientSize = new System.Drawing.Size(500, 650);
+            this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormRegistrasi";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormRegistrasi";
+            this.pnlMain.ResumeLayout(false);
+            this.pnlRegisterContainer.ResumeLayout(false);
+            this.pnlRegisterContainer.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.Panel pnlMain;
+        private System.Windows.Forms.Panel pnlRegisterContainer;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnDaftar;
-        private System.Windows.Forms.Button btnKembali;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox txtNamaLengkap;
+        private System.Windows.Forms.Label lblNamaLengkap;
     }
 }

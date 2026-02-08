@@ -112,12 +112,14 @@ namespace ProjectPemrog_MN.Controllers
             return id;
         }
 
+        // ================= GET PROFIL KARYAWAN =================
         public DataTable GetProfilKaryawan(string username)
         {
             DataTable dt = new DataTable();
 
             string query = @"
-        SELECT k.nama_lengkap, j.nama_jabatan, j.gaji_pokok
+        SELECT k.id_karyawan, k.nama_lengkap, j.nama_jabatan, j.gaji_pokok, 
+               k.alamat, k.no_hp, k.email
         FROM users u
         JOIN karyawan k ON u.id_karyawan = k.id_karyawan
         JOIN jabatan j ON k.id_jabatan = j.id_jabatan
@@ -132,6 +134,58 @@ namespace ProjectPemrog_MN.Controllers
             }
 
             return dt;
+        }
+
+        // ================= GET PROFIL KARYAWAN BERDASARKAN ID =================
+        public DataTable GetProfilKaryawanById(string idKaryawan)
+        {
+            DataTable dt = new DataTable();
+
+            string query = @"
+        SELECT k.id_karyawan, k.nama_lengkap, j.nama_jabatan, j.gaji_pokok, 
+               k.alamat, k.no_hp, k.email
+        FROM karyawan k
+        JOIN jabatan j ON k.id_jabatan = j.id_jabatan
+        WHERE k.id_karyawan = @id
+    ";
+
+            using (var conn = db.GetConnection())
+            using (var cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", idKaryawan);
+                new MySqlDataAdapter(cmd).Fill(dt);
+            }
+
+            return dt;
+        }
+
+        // ================= UPDATE PROFIL KARYAWAN =================
+        public bool UpdateProfilKaryawan(string idKaryawan, string alamat, string noHp, string email)
+        {
+            try
+            {
+                using (var conn = db.GetConnection())
+                using (var cmd = new MySqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = @"UPDATE karyawan 
+                                       SET alamat = @alamat, no_hp = @nohp, email = @email 
+                                       WHERE id_karyawan = @id";
+
+                    cmd.Parameters.AddWithValue("@alamat", alamat ?? "");
+                    cmd.Parameters.AddWithValue("@nohp", noHp ?? "");
+                    cmd.Parameters.AddWithValue("@email", email ?? "");
+                    cmd.Parameters.AddWithValue("@id", idKaryawan);
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error update profil: " + ex.Message);
+                return false;
+            }
         }
 
         public bool SimpanRegistrasiLengkap(string nama, string username, string password)
